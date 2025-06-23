@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>answer</title>
+</head>
+<body>
+<pre>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>趣味提问</title>
+    <style>
+        body {
+            font-family: '微软雅黑', Arial, sans-serif;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .question-box {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 30px 40px;
+            min-width: 320px;
+            text-align: center;
+        }
+        .options {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+        }
+        .btn {
+            padding: 10px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 6px;
+            background: #1976d2;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn:active {
+            background: #145ea8;
+        }
+        /* 第二题按钮特殊样式 */
+        .btn-small {
+            font-size: 8px;
+            padding: 2px 8px;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .btn-large {
+            font-size: 34px;
+            padding: 14px 48px;
+            background: #e53935;
+        }
+    </style>
+</head>
+<body>
+<div class="question-box" id="qbox">
+    <div class="question" id="question">问题：你是人类吗？</div>
+    <div class="options" id="options">
+        <button class="btn" id="yes1">是</button>
+        <button class="btn" id="no1">不是</button>
+    </div>
+</div>
+<script>
+    // 第一个问题逻辑
+    document.getElementById('yes1').onclick = function() {
+        // 什么也不做
+    };
+    document.getElementById('no1').onclick = function() {
+        // 切换到第二个问题
+        document.getElementById('question').innerText = '问题：你确定你是人类吗？';
+        document.getElementById('options').innerHTML = `
+            <button class="btn btn-small" id="yes2" disabled>是</button>
+            <button class="btn btn-large" id="no2">不是</button>
+        `;
+        document.getElementById('no2').onclick = function() {
+            document.getElementById('question').innerText = '恭喜你通过了“反人类”测试！';
+            document.getElementById('options').innerHTML = '';
+        };
+    };
+</script>
+</body>
+</html>
+</pre>
+</body>
+</html>
