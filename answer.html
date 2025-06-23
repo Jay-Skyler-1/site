@@ -2,68 +2,125 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>answer</title>
-</head>
-<body>
-<pre>
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
     <title>趣味提问</title>
+    <!-- Google Fonts for cartoon style -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: '微软雅黑', Arial, sans-serif;
-            background: #fafafa;
+            background: linear-gradient(135deg, #f9d423 0%, #ff4e50 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Fredoka One', '微软雅黑', Arial, sans-serif;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
         }
         .question-box {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            padding: 30px 40px;
-            min-width: 320px;
+            background: #fffbe7;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px rgba(255, 78, 80, 0.12), 0 1.5px 6px rgba(0,0,0,0.06);
+            padding: 48px 36px 36px 36px;
+            min-width: 340px;
             text-align: center;
+            max-width: 90vw;
+            position: relative;
+            border: 4px solid #ffe082;
+            animation: popIn 0.6s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            80% { transform: scale(1.08); opacity: 1;}
+            100% { transform: scale(1); }
+        }
+        .question {
+            font-size: 1.7rem;
+            margin-bottom: 32px;
+            color: #ff6f00;
+            letter-spacing: 1px;
+            text-shadow: 1px 2px 0 #fffde4;
+            font-family: 'Fredoka One', cursive, '微软雅黑', Arial, sans-serif;
         }
         .options {
-            margin-top: 24px;
             display: flex;
             justify-content: center;
-            gap: 24px;
+            gap: 32px;
         }
         .btn {
-            padding: 10px 30px;
-            font-size: 20px;
-            border: none;
-            border-radius: 6px;
-            background: #1976d2;
+            background: linear-gradient(135deg, #ffa726 60%, #ff7043 100%);
             color: #fff;
+            border: none;
+            border-radius: 40px;
+            font-size: 1.35rem;
+            font-family: 'Fredoka One', '微软雅黑', Arial, sans-serif;
+            padding: 16px 48px;
+            box-shadow: 0 2px 8px rgba(255, 112, 67, 0.15);
             cursor: pointer;
-            transition: all 0.2s;
+            transition: transform 0.15s, background 0.2s;
+            outline: none;
+            position: relative;
+            z-index: 1;
         }
         .btn:active {
-            background: #145ea8;
+            transform: scale(0.95) rotate(-2deg);
+            background: linear-gradient(135deg, #ffb74d 60%, #e57373 100%);
         }
         /* 第二题按钮特殊样式 */
         .btn-small {
-            font-size: 8px;
-            padding: 2px 8px;
-            opacity: 0.5;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            opacity: 0.4;
             cursor: not-allowed;
+            background: #ffd54f;
+            color: #ff6f00;
+            border: 2px dashed #ffb74d;
+            box-shadow: none;
         }
         .btn-large {
-            font-size: 34px;
-            padding: 14px 48px;
-            background: #e53935;
+            font-size: 2.2rem;
+            padding: 22px 60px;
+            background: linear-gradient(135deg, #ff4e50 30%, #fd6b85 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(253, 107, 133, 0.15);
+            border: 3px solid #fff176;
+            animation: shake 0.7s infinite alternate;
+        }
+        @keyframes shake {
+            0% { transform: rotate(-1deg) scale(1);}
+            100% { transform: rotate(2deg) scale(1.03);}
+        }
+        /* 卡通表情 */
+        .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            filter: drop-shadow(1px 2px 0 #fffde4);
+        }
+        /* 结尾动画 */
+        .final {
+            animation: popIn 0.7s cubic-bezier(0.33, 1, 0.68, 1);
+            font-size: 2rem;
+            color: #ff1744;
+            text-shadow: 0 2px 12px #fffbe7;
+        }
+        /* 响应式 */
+        @media (max-width: 500px) {
+            .question-box {
+                padding: 24px 5vw 24px 5vw;
+                min-width: unset;
+            }
+            .options {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .btn, .btn-large {
+                padding: 12px 10vw;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
 <div class="question-box" id="qbox">
+    <div class="emoji" id="emoji">🤔</div>
     <div class="question" id="question">问题：你是人类吗？</div>
     <div class="options" id="options">
         <button class="btn" id="yes1">是</button>
@@ -76,20 +133,18 @@
         // 什么也不做
     };
     document.getElementById('no1').onclick = function() {
-        // 切换到第二个问题
+        document.getElementById('emoji').textContent = '😏';
         document.getElementById('question').innerText = '问题：你确定你是人类吗？';
         document.getElementById('options').innerHTML = `
             <button class="btn btn-small" id="yes2" disabled>是</button>
             <button class="btn btn-large" id="no2">不是</button>
         `;
         document.getElementById('no2').onclick = function() {
-            document.getElementById('question').innerText = '恭喜你通过了“反人类”测试！';
+            document.getElementById('emoji').textContent = '🎉';
+            document.getElementById('question').innerHTML = '<span class="final">恭喜你通过了“反人类”测试！</span>';
             document.getElementById('options').innerHTML = '';
         };
     };
 </script>
-</body>
-</html>
-</pre>
 </body>
 </html>
